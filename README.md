@@ -65,7 +65,7 @@ ollama serve
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/KonulJ/pdf-rag-app.git
+git clone https://github.com/KonulJ/Pdf-rag-app.git
 cd pdf-rag-app
 
 # 2. Create a virtual environment
