@@ -101,16 +101,17 @@ if prompt := st.chat_input("Ask a question about your PDFs..."):
             sources: list[dict] = []
             st.markdown(answer)
         else:
-            with st.spinner("Searching documents and generating answer..."):
-                try:
+            sources: list[dict] = []
+            try:
+                with st.spinner("Searching documents..."):
+                    # Retrieval is synchronous — source_nodes available immediately.
+                    # Generation streams token-by-token via response_gen.
                     response = query_index(index, prompt)
-                    answer = str(response)
                     sources = extract_sources(response)
-                except Exception as exc:
-                    answer = f"Something went wrong: {exc}"
-                    sources = []
-
-            st.markdown(answer)
+                answer = st.write_stream(response.response_gen)
+            except Exception as exc:
+                answer = f"Something went wrong: {exc}"
+                st.markdown(answer)
 
             if sources:
                 with st.expander("View sources"):

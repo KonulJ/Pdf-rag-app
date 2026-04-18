@@ -15,7 +15,6 @@ from rag.config import (
 
 
 def _setup_settings() -> None:
-    """Configure global LlamaIndex settings (models, chunk sizes)."""
     Settings.embed_model = OllamaEmbedding(
         model_name=EMBED_MODEL,
         base_url=OLLAMA_BASE_URL,
@@ -38,10 +37,7 @@ def _get_chroma_collection():
 
 
 def load_index() -> VectorStoreIndex | None:
-    """
-    Load an existing index from ChromaDB.
-    Returns None if no documents have been indexed yet.
-    """
+    """Load index from ChromaDB; returns None if no documents indexed yet."""
     _setup_settings()
     client, collection = _get_chroma_collection()
 
@@ -56,10 +52,6 @@ def load_index() -> VectorStoreIndex | None:
 
 
 def index_pdf(file_path: str) -> VectorStoreIndex:
-    """
-    Parse a PDF, embed its chunks, and persist them in ChromaDB.
-    Re-uses any existing documents already in the collection.
-    """
     _setup_settings()
     client, collection = _get_chroma_collection()
 

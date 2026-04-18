@@ -8,13 +8,10 @@ from rag.config import TOP_K
 
 
 def query_index(index: VectorStoreIndex, question: str):
-    """
-    Run a question against the index and return the LlamaIndex Response object.
-    The response contains both the generated answer and the source nodes used.
-    """
+    """Return a StreamingResponse — source_nodes populated immediately, response_gen streams the answer."""
     query_engine = index.as_query_engine(
         similarity_top_k=TOP_K,
-        streaming=False,
+        streaming=True,
     )
     return query_engine.query(question)
 
